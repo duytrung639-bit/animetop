@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime World | Duy Trung Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --cr-orange: #f47521;
+            --cr-bg: #000000;
+            --cr-nav: rgba(20, 21, 25, 0.85); 
+            --cr-card: #1a1b1f;
+            --text-main: #ffffff;
+            --text-sub: #a0a0a0;
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--cr-bg);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            background-color: var(--cr-nav);
+            backdrop-filter: blur(15px); 
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-left { display: flex; align-items: center; flex: 1; }
+        .logo-text {
+            color: var(--cr-orange);
+            font-family: var(--font-head);
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            margin-right: 50px;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 30px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .nav-links a:hover { color: var(--cr-orange); }
+
+        /* --- HERO SECTION (HIỂN THỊ FULL ẢNH NỀN) --- */
+        .hero {
+            height: 100vh; 
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-color: #000;
+            /* Thay đổi URL ảnh nền tại đây */
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%),
+                url('../IMG/Artstation.jpg');
+            background-repeat: no-repeat;
+            background-size: cover; 
+            background-position: center;
+            padding: 0 10%;
+        }
+
+        .hero-content { 
+            max-width: 800px; 
+            z-index: 2;
+        }
+        
+        .hero-content h1 { 
+            font-family: var(--font-head);
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900; 
+            margin-bottom: 15px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .hero-content p { 
+            font-size: 18px; 
+            color: #e0e0e0; 
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .btn-main {
+            background: var(--cr-orange);
+            color: #000;
+            padding: 16px 40px;
+            text-decoration: none;
+            font-family: var(--font-head);
+            font-weight: 900;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .btn-main:hover { transform: scale(1.05); background: #fff; }
+
+        /* --- GRID PHIM (HIỂN THỊ FULL ẢNH POSTER) --- */
+        .main-container { padding: 60px 10%; background: #000; }
+        .shelf-title {
+            font-family: var(--font-head);
+            font-size: 24px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--cr-orange);
+            padding-left: 15px;
+            text-transform: uppercase;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .anime-link { text-decoration: none; color: inherit; display: block; }
+
+        .anime-card {
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+        /* Chỉnh box ảnh để không bị cắt */
+        .img-box { 
+            width: 100%; 
+            aspect-ratio: 2/3; /* Tỉ lệ chuẩn của poster anime */
+            overflow: hidden; 
+            position: relative; 
+        }
+
+        .img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Đảm bảo ảnh lấp đầy khung hình mà không bị méo */
+            transition: 0.5s; 
+        }
+
+        .anime-link:hover .anime-card { transform: translateY(-8px); }
+        .anime-link:hover img { transform: scale(1.08); }
+
+        .anime-info { padding: 15px; }
+        .anime-info h3 { 
+            font-family: var(--font-head);
+            font-size: 16px; 
+            margin-bottom: 5px; 
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .anime-info span { color: var(--cr-orange); font-size: 13px; font-weight: 700; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #0b0c0f;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #23252b;
+        }
+        .footer-logo { font-family: var(--font-head); color: var(--cr-orange); font-weight: 900; font-size: 24px; }
+        .copy { font-size: 12px; color: #555; margin-top: 20px; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-left">
+        <a href="#" class="logo-text">AnimeHub</a>
+        <div class="nav-links">
+            <a href="#">Duyệt xem</a>
+            <a href="#">Lịch chiếu</a>
+            <a href="#">Mùa mới</a>
+        </div>
+    </div>
+    <div class="nav-right">
+        <div style="position: relative; display: flex; align-items: center; background: #222; padding: 5px 15px; border-radius: 4px;">
+            <i class="fas fa-search" style="font-size: 14px; color: #888; margin-right: 10px;"></i>
+            <input type="text" placeholder="Tìm phim..." style="background: transparent; border: none; color: white; outline: none; font-size: 14px;">
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Khám Phá<br>Thế Giới Anime</h1>
+        <p>Thư viện hoạt hình tổng hợp lớn nhất dành riêng cho bạn. Trải nghiệm chất lượng 4K cực đỉnh.</p>
+        <a href="#trending" class="btn-main"><i class="fas fa-play"></i> XEM NGAY BÂY GIỜ</a>
+    </div>
+</section>
+
+<div class="main-container" id="trending">
+    <h2 class="shelf-title">Hoạt Hình Thịnh Hành</h2>
+    <div class="grid-layout">
+
+        <a href="https://motchillru.fm/phim/dao-hai-tac-full-1xc" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/onepiece.jpg" alt="One Piece"></div>
+                <div class="anime-info">
+                    <h3>One Piece: Đảo Hải Tặc</h3>
+                    <span>TẬP 1100 • PHỤ ĐỀ</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://motchillru.fm/phim/thanh-guom-diet-quy-vo-han-thanh-full-a1" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/demonslayer.jpg" alt="Thanh Gươm Diệt Quỷ"></div>
+                <div class="anime-info">
+                    <h3>Thanh Gươm Diệt Quỷ</h3>
+                    <span>Movie • THUYẾT MINH</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://boctem.com/chu-thuat-hoi-chien-id-1/" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/wiki.jpg" alt="Jujutsu Kaisen"></div>
+                <div class="anime-info">
+                    <h3>Chú Thuật Hồi Chiến</h3>
+                    <span>Trọn Bộ • PHỤ ĐỀ</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://www.youtube.com/playlist?list=PLKvoOwlacRoLbAmCd_0HsADRTCD4oo0Mv" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/conan.jpg" alt="Conan"></div>
+                <div class="anime-info">
+                    <h3>Thám Tử Lừng Danh Conan</h3>
+                    <span>Movie • PHỤ ĐỀ</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://animevietsub.now/phim/katekyo-hitman-reborn-a1432/" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/reborn.jpg" alt="Reborn"></div>
+                <div class="anime-info">
+                    <h3>Gia Sư Siêu Quậy Reborn</h3>
+                    <span>Trọn Bộ • THUYẾT MINH</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://www.youtube.com/playlist?list=PLKvoOwlacRoIpgyNNM5hZbhrduPangnH4" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/naruto.jpg.webp" alt="Naruto"></div>
+                <div class="anime-info">
+                    <h3>Naruto Shippuden</h3>
+                    <span>Trọn Bộ • LỒNG TIẾNG</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://handleheldgame.com/anime-dragon-ball-series.html" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/goku.jpg" alt="Dragon Ball"></div>
+                <div class="anime-info">
+                    <h3>7 Viên Ngọc Rồng</h3>
+                    <span>Trọn Bộ • THUYẾT MINH</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://animevietsub.now/phim/hoc-vien-sieu-anh-hung-i5-a501/" class="anime-link">
+            <div class="anime-card">
+                <div class="img-box"><img src="../IMG/hero.jpg" alt="Hero"></div>
+                <div class="anime-info">
+                    <h3>Học Viện Siêu Anh Hùng</h3>
+                    <span>Trọn Bộ • LỒNG TIẾNG</span>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<footer>
+    <div class="footer-logo">ANIMEHUB</div>
+    <p style="color: #888; margin-top: 10px;">Nền tảng xem phim Anime chất lượng cao hàng đầu Việt Nam.</p>
+    <p class="copy">© 2026 DUY TRUNG - THIẾT KẾ WEB</p>
+</footer>
+
+</body>
+</html>
